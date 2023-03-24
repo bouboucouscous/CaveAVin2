@@ -1,0 +1,128 @@
+https://github.com/dunglas/symfony-docker use this template
+git clone le projet
+docker compose build --pull --no-cache
+docker compose up
+
+sur le server php 
+composer require symfony/orm-pack
+composer require webapp
+composer require "admin:^4"
+composer require "twig/intl-extra:^3"
+
+docker compose exec php bin/console make:controller CaveAVinController
+
+docker compose exec php bin/console make:admin:dashboard
+docker compose exec php bin/console make:auth
+docker compose exec php bin/console make:entity Utilisateur
+
+docker compose exec php bin/console make:entity Vin
+docker compose exec php bin/console make:entity TeneurEnSucre
+docker compose exec php bin/console make:entity Robe
+
+docker compose exec php bin/console make:migration
+docker compose exec php bin/console doctrine:migrations:migrate
+regarder la table créer lors du migrate et lui créer son entité la personalisé
+
+docker compose exec php bin/console make:admin:crud (tous)
+
+sur le server php 
+php bin/console dbal:run-sql "INSERT INTO admin (id, username, roles, password)  VALUES (nextval('admin_id_seq'), 'admin', '[\"ROLE_ADMIN\"]', '\$2y13\$O0tRHGo3FjgSCSvNx6i2GOnmKFqzNZmqr82vGIrmat80gLsEkDzpm';"
+
+docker compose exec php bin/console make:registration-form
+
+
+
+
+---------------------------------
+a mettre dans caveAvinControlleur
+<?php
+
+namespace App\Controller;
+
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+
+class CaveAVinController extends AbstractController
+{
+    #[Route('/', name: 'homepage')]
+    public function index(): Response
+    {
+        return $this->render('cave_a_vin/index.html.twig', [
+            'controller_name' => 'CaveAVinController',
+        ]);
+    }
+}
+---------------------------------------
+
+
+------------------------------------
+a mettre dans index.html.twig
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CaveAVinController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    <h1>Hello {{ controller_name }}! ✅</h1>
+
+    This friendly message is coming from:
+    <ul>
+        <li>Your controller at <code><a href="{{ '/srv/app/src/Controller/CaveAVinController.php'|file_link(0) }}">src/Controller/CaveAVinController.php</a></code></li>
+        <li>Your template at <code><a href="{{ '/srv/app/templates/cave_a_vin/index.html.twig'|file_link(0) }}">templates/cave_a_vin/index.html.twig</a></code></li>
+    </ul>
+</div>
+{% endblock %}
+------------------------------------
+
+
+--------------------------------
+a mettre dans le controlleur admin
+<?php
+
+namespace App\Controller\Admin;
+
+use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
+use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
+use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
+
+use App\Entity\Robe;
+use App\Entity\TeneurEnSucre;
+use App\Entity\Vin;
+use App\Entity\Utilisateur;
+
+class AdminDashboardController extends AbstractDashboardController
+{
+    #[Route('/admin', name: 'admin')]
+    public function index(): Response
+    {
+        $routeBuilder = $this->container->get(AdminUrlGenerator::class);
+        $url = $routeBuilder->setController(RobeCrudController::class)->generateUrl();
+
+        return $this->redirect($url);
+    }
+
+    public function configureDashboard(): Dashboard
+    {
+        return Dashboard::new()
+            ->setTitle('App');
+    }
+
+    public function configureMenuItems(): iterable
+    {
+        yield MenuItem::linktoRoute('Back to web site', 'fas fa-home','homepage');
+        yield MenuItem::linkToCrud('Robe','fa-sharp fa-solid fa-wine-glass',Robe::Class);        
+        yield MenuItem::linkToCrud('TeneurEnSucre','fa-sharp fa-solid fa-cubes-stacked',TeneurEnSucre::Class);
+        yield MenuItem::linkToCrud('Vin','fa-solid fa-wine-bottle',Vin::Class);
+        yield MenuItem::linkToCrud('Utilisateur','fa-solid fa-user',Utilisateur::Class);
+    }
+}
+--------------------------------
