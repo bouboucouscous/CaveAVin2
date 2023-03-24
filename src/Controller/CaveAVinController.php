@@ -8,7 +8,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class CaveAVinController extends AbstractController
 {
-    #[Route('/cave/a/vin', name: 'app_cave_a_vin')]
+    #[Route('/', name: 'homepage')]
     public function index(): Response
     {
         return $this->render('cave_a_vin/index.html.twig', [
