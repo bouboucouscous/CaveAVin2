@@ -65,11 +65,16 @@ class TeneurEnSucre
     {
         if ($this->vins->removeElement($vin)) {
             // set the owning side to null (unless already changed)
-            if ($vin->getTeneurEnSucre() === $this) {
+            if ($vin->getTeneurOEnSucre() === $this) {
                 $vin->setTeneurEnSucre(null);
             }
         }
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->gout;
     }
 }

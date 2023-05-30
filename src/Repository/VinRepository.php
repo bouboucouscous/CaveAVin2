@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Vin;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 
 /**
  * @extends ServiceEntityRepository<Vin>
@@ -38,21 +39,87 @@ class VinRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+    
 
-//    /**
-//     * @return Vin[] Returns an array of Vin objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('v')
-//            ->andWhere('v.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('v.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function paginationQuery()
+    {
+        return $this->createQueryBuilder('v')
+            ->orderBy('v.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery() ;
+    }
+
+    public function getDistinctAnnees()
+    {
+        $queryBuilder = $this->createQueryBuilder('v')
+        ->select("v.Annee")
+        ->orderBy('v.Annee', 'ASC')
+        ->groupBy('v.Annee')
+        ->getQuery()
+        ->getResult();
+
+        $annees = array_map(function ($queryBuilder) {
+            return $queryBuilder['Annee']->format('Y');;
+        }, $queryBuilder);
+
+        return $annees;
+    }
+
+    public function getDistinctFormat()
+    {
+        $queryBuilder = $this->createQueryBuilder('v')
+        ->select("v.formatCl")
+        ->orderBy('v.formatCl', 'ASC')
+        ->groupBy('v.formatCl')
+        ->getQuery()
+        ->getResult();
+
+        $annees = array_map(function ($queryBuilder) {
+            return $queryBuilder['formatCl'];
+        }, $queryBuilder);
+
+        return $annees;
+    }
+
+    public function getDistinctRobe()
+    {
+        $connection = $this->getEntityManager()->getConnection();
+        $sql = '
+            SELECT DISTINCT r.couleur_robe
+            FROM robe r
+            WHERE r.id IN (
+                SELECT v.robe_id
+                FROM vin v
+            )
+            ORDER BY r.couleur_robe ASC
+        ';
+
+        $stmt = $connection->prepare($sql);
+
+        $resultSet = $stmt->executeQuery();
+
+        $resultSet->fetchAllAssociative();
+    }
+
+    public function getDistinctTeneurEnSucre()
+    {
+        $connection = $this->getEntityManager()->getConnection();
+        $sql = '
+            SELECT DISTINCT t.gout
+            FROM teneur_en_sucre t
+            WHERE t.id IN (
+                SELECT v.teneur_en_sucre_id
+                FROM vin v
+            )
+            ORDER BY t.gout ASC
+        ';
+
+        $stmt = $connection->prepare($sql);
+
+        $resultSet = $stmt->executeQuery();
+
+        return $resultSet->fetchAllAssociative();
+    }
 
 //    public function findOneBySomeField($value): ?Vin
 //    {

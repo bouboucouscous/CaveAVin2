@@ -40,16 +40,13 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?int $nbPlaceBouteillle = null;
 
-    #[ORM\ManyToMany(targetEntity: Vin::class, inversedBy: 'Cave')]
-    private Collection $cave;
-
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $email = null;
 
-    public function __construct()
-    {
-        $this->cave = new ArrayCollection();
-    }
+    #[ORM\OneToOne(mappedBy: 'utilistaeur_id', cascade: ['persist', 'remove'])]
+    private ?Cave $cave = null;
+
+    public string $plainPassword;
 
     public function getId(): ?int
     {
@@ -83,11 +80,13 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getRoles(): array
     {
-        $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
+        if(empty($this->roles))
+        {
+            $roles[] = 'ROLE_USER';
+            return array_unique($roles);
+        }        
 
-        return array_unique($roles);
+        return array_unique($this->roles);
     }
 
     public function setRoles(array $roles): self
@@ -103,6 +102,11 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     public function getPassword(): string
     {
         return $this->password;
+    }
+
+    public function getPlainPassword(): string
+    {
+        return $this->plainPassword;
     }
 
     public function setPassword(string $password): self
@@ -157,30 +161,6 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * @return Collection<int, Vin>
-     */
-    public function getCave(): Collection
-    {
-        return $this->cave;
-    }
-
-    public function addCave(Vin $cave): self
-    {
-        if (!$this->cave->contains($cave)) {
-            $this->cave->add($cave);
-        }
-
-        return $this;
-    }
-
-    public function removeCave(Vin $cave): self
-    {
-        $this->cave->removeElement($cave);
-
-        return $this;
-    }
-
     public function getEmail(): ?string
     {
         return $this->email;
@@ -189,6 +169,28 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     public function setEmail(string $email): self
     {
         $this->email = $email;
+
+        return $this;
+    }
+
+    public function getCave(): ?Cave
+    {
+        return $this->cave;
+    }
+
+    public function setCave(?Cave $cave): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($cave === null && $this->cave !== null) {
+            $this->cave->setUtilistaeurId(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($cave !== null && $cave->getUtilistaeurId() !== $this) {
+            $cave->setUtilistaeurId($this);
+        }
+
+        $this->cave = $cave;
 
         return $this;
     }

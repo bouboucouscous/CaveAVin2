@@ -12,6 +12,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use App\Entity\Robe;
 use App\Entity\TeneurEnSucre;
 use App\Entity\Utilisateur;
+use App\Entity\Cave;
 use App\Entity\Vin;
 
 class DashboardController extends AbstractDashboardController
@@ -36,6 +37,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linktoRoute('Back to web site', 'fas fa-home','homepage');
         yield MenuItem::linkToCrud('Robe','fa-sharp fa-solid fa-wine-glass',Robe::Class);        
         yield MenuItem::linkToCrud('TeneurEnSucre','fa-sharp fa-solid fa-cubes-stacked',TeneurEnSucre::Class);
+        yield MenuItem::linkToCrud('Cave','fa-solid fa-wine-bottle',Cave::Class);
         yield MenuItem::linkToCrud('Vin','fa-solid fa-wine-bottle',Vin::Class);
         yield MenuItem::linkToCrud('Utilisateur','fa-solid fa-user',Utilisateur::Class);
     }

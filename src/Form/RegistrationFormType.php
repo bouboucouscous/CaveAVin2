@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Utilisateur;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -11,6 +12,12 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Regex;
+use Symfony\Component\Validator\Constraints\NotCompromisedPassword;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Validator\Constraints\GreaterThan;
+use Symfony\Component\Validator\Constraints\NotNull;
+
 
 class RegistrationFormType extends AbstractType
 {
@@ -18,6 +25,17 @@ class RegistrationFormType extends AbstractType
     {
         $builder
             ->add('username')
+            ->add('nom')
+            ->add('prenom')
+            ->add('nbPlaceBouteillle', IntegerType::class, [
+                'constraints' => [
+                    new NotNull(['message' => 'Ce champ ne peut pas être vide.']),
+                    new GreaterThan(['value' => 0, 'message' => 'Le nombre doit être supérieur à zéro.'])
+                ],
+            ])
+            ->add('email', TextType::class,[
+                'label' => 'Adresse mail',
+            ])
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
                 'constraints' => [
@@ -33,13 +51,32 @@ class RegistrationFormType extends AbstractType
                 'attr' => ['autocomplete' => 'new-password'],
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Please enter a password',
+                        'message' => 'Veulliez entrer un mot de passe',
                     ]),
                     new Length([
-                        'min' => 6,
-                        'minMessage' => 'Your password should be at least {{ limit }} characters',
+                        'min' => 8,
+                        'minMessage' => 'Votre mot de passe doit faire minimum 8 caractères',
                         // max length allowed by Symfony for security reasons
                         'max' => 4096,
+                    ]),
+                    new NotCompromisedPassword([
+                        'message' => 'Le mot de passe est compromis dans des bases public'
+                    ]),
+                    new Regex([
+                        'pattern' => '/\+/i',
+                        'message' => 'Le mot de passe doit contenir au moins un chiffre',
+                    ]),
+                    new Regex([
+                        'pattern' => '/[#?!@$%^&*-]+/i',
+                        'message' => 'Le mot de passe doit contenir au moins un des caractères suivant: /[#?!@$%^&*-]',
+                    ]),
+                    new Regex([
+                        'pattern' => '/azertyuiopqsdfghjklmwxcvbn+/i',
+                        'message' => 'Votre mot de passe doit contenir au moins un caractère miniscule',
+                    ]),
+                    new Regex([
+                        'pattern' => '/AZERTYUIOPQSDFGHJKLMWXCVBN+/i',
+                        'message' => 'Votre mot de passe doit contenir au moins un caractère majuscule',
                     ]),
                 ],
             ])

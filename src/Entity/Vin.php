@@ -25,9 +25,6 @@ class Vin
     #[ORM\Column]
     private ?int $formatCl = null;
 
-    
-    private $image;
-
     #[ORM\ManyToOne(inversedBy: 'Robe')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Robe $robe = null;
@@ -53,21 +50,24 @@ class Vin
         return $this;
     }
 
-    public function getAnnee(): ?\DateTimeInterface
+    public function getAnnee(): ?string
     {
-        return $this->Annee;
+        if ($this->Annee === null) {
+            return null;
+        }
+        
+        return $this->Annee->format('Y');       
     }
 
-    public function setAnnee(\DateTimeInterface $Annee): self
+    public function setAnnee(?int $Annee): self
     {
-        $this->Annee = $Annee;
-
+        $this->Annee = \DateTimeImmutable::createFromFormat('Y', (string)$Annee);;
         return $this;
     }
 
-    public function getFormatCl(): ?int
+    public function getFormatCl(): ?string
     {
-        return $this->formatCl;
+        return (string)$this->formatCl;
     }
 
     public function setFormatCl(int $formatCl): self
@@ -75,16 +75,6 @@ class Vin
         $this->formatCl = $formatCl;
 
         return $this;
-    }
-
-    public function getImage(): ?string
-    {
-        return $this->image;
-    }
-
-    public function setImage(File $file =null)
-    {
-        $this->image = $file;
     }
 
     public function getRobe(): ?Robe
