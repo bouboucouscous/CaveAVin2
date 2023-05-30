@@ -27,7 +27,7 @@ class CaveAVinController extends AbstractController
             5
         );
 
-        //\Doctrine\Common\Util\Debug::dump($teneurEnSucre);
+        //\Doctrine\Common\Util\Debug::dump($robe);
 
         return $this->render('cave_a_vin/index.html.twig', [
             'pagination' => $pagination,
@@ -46,33 +46,53 @@ class CaveAVinController extends AbstractController
         $robe = $request->query->get('robe');
         $teneurEnSucre = $request->query->get('teneurEnSucre');
 
-        // Ajouter les filtres à l'array des filtres
-        if ($annee) {
-            $filters['annee'] = $annee;
-        }
-        if ($formatCl) {
-            $filters['formatCl'] = $formatCl;
-        }
-        if ($robe) {
-            $filters['robe'] = $robe;
-        }
-        if ($teneurEnSucre) {
-            $filters['teneurEnSucre'] = $teneurEnSucre;
-        }
+        if($annee || $formatCl || $robe || $teneurEnSucre)
+        {
+            $getDistinctAnnees = $entityManager->getRepository(Vin::class)->getDistinctAnnees();
+            $getDistinctRobe = $entityManager->getRepository(Vin::class)->getDistinctRobe();
+            $getDistinctFormat = $entityManager->getRepository(Vin::class)->getDistinctFormat();
+            $getDistinctTeneurEnSucre = $entityManager->getRepository(Vin::class)->getDistinctTeneurEnSucre();
 
-        // Récupérer les vins correspondants aux filtres
-        $vins = $vinRepository->findByFilters($filters);
+            if ($annee) {
+                $filters['annee'] = $annee;
+            }
+            if ($formatCl) {
+                $filters['formatCl'] = $formatCl;
+            }
+            if ($robe) {
+                $filters['robe'] = $robe;
+            }
+            if ($teneurEnSucre) {
+                $filters['teneurEnSucre'] = $teneurEnSucre;
+            }
+                        
+            $pagination = $paginationInterface->paginate(
+                $vinRepository->findByFilters($filters),
+                $request->query->get('page',1),
+                5
+            );
+    
+            return $this->render('cave_a_vin/filter.html.twig', [
+                'pagination' => $pagination,
+                'annees' => $getDistinctAnnees,
+                'robes' => $getDistinctRobe,
+                'formats' => $getDistinctFormat,
+                'teneurEnSucres' => $getDistinctTeneurEnSucre
+            ]);
+        }
+        else
+        {
+            return $this->redirectToRoute('homepage');
+        }
+    }
 
-
-        $pagination = $paginationInterface->paginate(
-            $vinRepository->findByFilters($filters),
-            $request->query->get('page',1),
-            5
-        );
-
-        return $this->render('cave_a_vin/index.html.twig', [
-            'pagination' => $pagination,
-            'annees' => $annees,
+    #[Route('/vin/{id}', name: 'app_vin_detail')]
+    public function showVinDetail(Vin $vin): Response
+    {
+        return $this->render('cave_a_vin/detail.html.twig', [
+            'vin' => $vin,
         ]);
     }
 }
+
+
