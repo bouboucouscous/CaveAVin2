@@ -10,12 +10,12 @@
     <h1>Liste des vins</h1>    
     {% for vin in pagination %}
         <ul>
-            <li>{{ vin.Nom }}</li>
-            <li>{{ vin.Annee }}</li>
-            <li>{{ vin.formatCl }}</li>
-            <li>{{ vin.robe }}</li>
-            <li>{{ vin.TeneurEnSucre }}</li>
-            <a href="{{ path('app_vin_detail', { 'id': vin.id }) }}">Voir les détails</a>
+            <li>{{ vin.nom }}</li>
+            <li>{{ vin.annee }}</li>
+            <li>{{ vin.format_cl }}</li>
+            <li>{{ vin.couleur_robe }}</li>
+            <li>{{ vin.gout }}</li>
+
         </ul>
     {% endfor %}
 

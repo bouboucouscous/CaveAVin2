@@ -98,7 +98,7 @@ class VinRepository extends ServiceEntityRepository
 
         $resultSet = $stmt->executeQuery();
 
-        $resultSet->fetchAllAssociative();
+        return $resultSet->fetchAllAssociative();
     }
 
     public function getDistinctTeneurEnSucre()
@@ -120,6 +120,62 @@ class VinRepository extends ServiceEntityRepository
 
         return $resultSet->fetchAllAssociative();
     }
+
+    public function findByFilters($filters)
+    {
+        $connection = $this->getEntityManager()->getConnection();
+        $sql = '
+            SELECT v.Nom, EXTRACT(YEAR from v.Annee) annee, v.format_cl, r.couleur_robe, t.gout
+            FROM vin v, robe r, teneur_en_sucre t
+            WHERE v.robe_id = r.id
+            AND v.teneur_en_sucre_id = t.id
+        ';
+
+        // Filtre par année
+        if (!empty($filters['annee'])) {
+            $sql .= '
+            AND EXTRACT(YEAR FROM v.Annee) = :annee';
+        }
+
+        // Filtre par formatCl
+        if (!empty($filters['formatCl'])) {
+            $sql .= '
+            AND v.format_cl = :formatCl';
+        }
+
+        // Filtre par robe
+        if (!empty($filters['robe'])) {
+            $sql .= '
+            AND r.couleur_robe = :robe';
+        }
+
+        // Filtre par teneurEnSucre
+        if (!empty($filters['teneurEnSucre'])) {
+            $sql .= '
+            AND t.gout = :teneurEnSucre';
+        }
+
+        $stmt = $connection->prepare($sql);
+
+        // Liens des paramètres
+        if (!empty($filters['annee'])) {
+            $stmt->bindValue('annee', $filters['annee']);
+        }
+        if (!empty($filters['formatCl'])) {
+            $stmt->bindValue('formatCl', $filters['formatCl']);
+        }
+        if (!empty($filters['robe'])) {
+            $stmt->bindValue('robe', $filters['robe']);
+        }
+        if (!empty($filters['teneurEnSucre'])) {
+            $stmt->bindValue('teneurEnSucre', $filters['teneurEnSucre']);
+        }
+
+        $resultSet = $stmt->executeQuery();
+
+        return $resultSet->fetchAllAssociative();
+    }
+
 
 //    public function findOneBySomeField($value): ?Vin
 //    {

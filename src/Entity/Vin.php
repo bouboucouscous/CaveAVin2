@@ -61,7 +61,7 @@ class Vin
 
     public function setAnnee(?int $Annee): self
     {
-        $this->Annee = \DateTimeImmutable::createFromFormat('Y', (string)$Annee);;
+        $this->Annee = \DateTimeImmutable::createFromFormat('Y', (string)$Annee);
         return $this;
     }
 
