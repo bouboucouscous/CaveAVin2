@@ -125,7 +125,7 @@ class VinRepository extends ServiceEntityRepository
     {
         $connection = $this->getEntityManager()->getConnection();
         $sql = '
-            SELECT v.Nom, EXTRACT(YEAR from v.Annee) annee, v.format_cl, r.couleur_robe, t.gout
+            SELECT v.id, v.Nom, EXTRACT(YEAR from v.Annee) annee, v.format_cl, r.couleur_robe, t.gout
             FROM vin v, robe r, teneur_en_sucre t
             WHERE v.robe_id = r.id
             AND v.teneur_en_sucre_id = t.id

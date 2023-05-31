@@ -100,4 +100,9 @@ class Vin
 
         return $this;
     }
+
+    public function __toString()
+    {
+        return $this->Nom . " " . $this->Annee->format('Y'); 
+    }
 }

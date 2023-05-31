@@ -39,6 +39,22 @@ class CaveRepository extends ServiceEntityRepository
         }
     }
 
+    public function findAllWhitNameWine()
+    {
+        $connection = $this->getEntityManager()->getConnection();
+        $sql = '
+            SELECT v.Nom, c.enter_date, c.exit_date, c.id
+            FROM vin v, cave c
+            where v.id = c.id_vin_id
+        ';
+
+        $stmt = $connection->prepare($sql);
+
+        $resultSet = $stmt->executeQuery();
+
+        return $resultSet->fetchAllAssociative();
+    }
+
 //    /**
 //     * @return Cave[] Returns an array of Cave objects
 //     */

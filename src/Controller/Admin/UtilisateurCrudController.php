@@ -30,12 +30,6 @@ class UtilisateurCrudController extends AbstractCrudController
         TextField::new('nom'),
         TextField::new('prenom'),
 
-        /*TextEditorField::new('roles')
-        ->formatValue(function ($value, $entity) {
-            // Utiliser une méthode ou une propriété spécifique pour récupérer une représentation textuelle des rôles
-            return $entity->getRolesAsString();
-        }),*/
-
         IntegerField::new('nbPlaceBouteillle'),
 
         TextField::new('email'),

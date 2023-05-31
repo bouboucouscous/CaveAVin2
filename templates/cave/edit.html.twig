@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Cave{% endblock %}
+
+{% block body %}
+    <h1>Edit Cave</h1>
+
+    {{ include('cave/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_cave_index') }}">back to list</a>
+
+    {{ include('cave/_delete_form.html.twig') }}
+{% endblock %}

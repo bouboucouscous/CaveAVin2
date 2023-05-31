@@ -3,7 +3,7 @@
 {% block title %}Home{% endblock %}
 
 {% block body %}
-    {% include 'navBar.html.twig' %}
+    {% include 'homepageTemplate/navBar.html.twig' %}
 
     {% include 'homepageTemplate/filter.html.twig' %}
 
@@ -15,7 +15,7 @@
             <li>{{ vin.format_cl }}</li>
             <li>{{ vin.couleur_robe }}</li>
             <li>{{ vin.gout }}</li>
-
+            <a href="{{ path('app_vin_detail', { 'id': vin.id }) }}">Voir les détails</a>
         </ul>
     {% endfor %}
 
