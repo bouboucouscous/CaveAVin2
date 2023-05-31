@@ -2,7 +2,7 @@
 {# Formulaire de filtres #}
 <div class="text-end">
     <form method="get" action="{{ path('filtre') }}">
-        <div class="form-group filter-group">
+        <div class="form-group filter-group text-center">
             <label for="annee">Année :</label>
             <select name="annee" id="annee" class="form-control">
                 <option value="">Tous</option>
@@ -11,7 +11,7 @@
                 {% endfor %}
             </select>
         </div>
-        <div class="form-group filter-group">
+        <div class="form-group filter-group text-center">
             <label for="formatCl">Format :</label>
             <select name="formatCl" id="formatCl" class="form-control">
                 <option value="">Tous</option>
@@ -20,7 +20,7 @@
                 {% endfor %}
             </select>
         </div>
-        <div class="form-group filter-group">
+        <div class="form-group filter-group text-center">
             <label for="robe">Robe :</label>
             <select name="robe" id="robe" class="form-control">
                 <option value="">Tous</option>
@@ -31,7 +31,7 @@
                 {% endfor %}
             </select>
         </div>
-        <div class="form-group filter-group">
+        <div class="form-group filter-group text-center">
             <label for="teneurEnSucre">Teneur en sucre :</label>
             <select name="teneurEnSucre" id="teneurEnSucre" class="form-control">
                 <option value="">Tous</option>

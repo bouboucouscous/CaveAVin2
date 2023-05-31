@@ -1,11 +1,25 @@
-<h1>Détails du vin</h1>
+{% extends 'base.html.twig' %}
 
-<div>
-    <h3>{{ vin.nom }}</h3>
-    <p>Année : {{ vin.annee }}</p>
-    <p>Format en cl : {{ vin.formatCl }}</p>
-    <p>Robe : {{ vin.robe }}</p>
-    <p>Teneur en sucre : {{ vin.teneurEnSucre }}</p>
-    {# note moyenne du produit #}
-    {# listes des commentaires s'il y en a #}
-</div>
+{% block title %}Détails du vin{% endblock %}
+
+{% block body %}
+    <div>
+        {% include 'homepageTemplate/background.html.twig' %}
+        {% include 'homepageTemplate/button_user.html.twig' %}
+        <h1 class="h3 mb-3 font-weight-normal" style="z-index:1;position: fixed; top:30%;left:35%"><a>{{ vin.nom }}</a></h1>
+    </div>
+    <div class="row posts-entry" style="left:35%;position: inherit;">
+        <center style="padding-top:1%; ">
+            <div class="blog-entry d-flex blog-entry-search-item">
+                    <img class="img-fluid img-link me-4" src="https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcRr13EkNjqP27YI8nAJCv5TdFmX6DuCQnwPYSFJqecfNly7OUrH1uPnmvYFCu8XMcGk6HRz86loLPTOxOi8ThsFQ9eZuEQ-30gU61mSlKhwTuTgEdFIqrw_qVMOhmhdZo-PbEc&usqp=CAc" alt="Image">
+                    <div>
+                        
+                        <p>Année : {{ vin.annee }}</p>
+                        <p>Format en cl : {{ vin.formatCl }}</p>
+                        <p>Robe : {{ vin.robe }}</p>
+                        <p>Teneur en sucre : {{ vin.teneurEnSucre }}</p>
+                    </div>
+                </div>
+        </center>
+    </div>
+{% endblock %}

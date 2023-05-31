@@ -1,28 +1,7 @@
 {% block body %}
- <header class="site-cover overlay single-page" style="padding-bottom: 55vh;  background-image: url({{ asset('image/fond/index.jpeg') }});>
     <div>
-        <nav class="site-nav">
-            <div class="container">
-                <div class="menu-bg-wrap">
-                    <div class="site-navigation">
-                        <div class="row g-0 align-items-center">           
-                            {% if app.user %}
-                                <div class="col-10">
-                                    <h1><a class="site-cover.single-page posts-entry-title" href="{{ path('app_cave_index') }}">{{ app.user.username }}</a></h1>
-                                </div>
-                                <div class="col-2">
-                                    <a href="{{ path('app_logout') }}" class="btn btn-primary">Déconnexion</a>
-                                </div>
-                            {% else %}
-                                <div class="col-12 text-center">
-                                    <a class="btn btn-primary" href="{{ path('app_login') }}">Connexion</a>
-                                </div>
-                            {% endif %}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </nav>
+        {% include 'homepageTemplate/background.html.twig' %}
+        {% include 'homepageTemplate/button_user.html.twig' %}
         <div class="container">
             <div class="row same-height justify-content-center">
                 <div class="col-md-6">

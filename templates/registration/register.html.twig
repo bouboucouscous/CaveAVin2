@@ -3,25 +3,25 @@
 {% block title %}Register{% endblock %}
 
 {% block body %}
-    <h1>Register</h1>
+    {% include 'homepageTemplate/background.html.twig' %}
+        <h1 class="h3 mb-3 font-weight-normal" style="z-index:1;position: fixed; left:45%; top:3%"> Register</h1>
+    <form method="post" id="mformulaire" style="top:15%">
     <div class="centerform">
+
     {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.nom) }}
-        {{ form_row(registrationForm.prenom) }}
-        {{ form_row(registrationForm.username) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.nbPlaceBouteillle, {
-            'attr': {
-                'min': 0
-            }
-        }) }}
 
-        {{ form_row(registrationForm.agreeTerms) }}
+        {{ form_row(registrationForm.nom, {'attr': {'style': 'color: white;', 'class': 'form-control'}, 'label_attr': {'style': 'color: white;'}}) }}
+        {{ form_row(registrationForm.prenom, {'attr': {'style': 'color: white;', 'class': 'form-control'}, 'label_attr': {'style': 'color: white;'}}) }}
+        {{ form_row(registrationForm.username, {'attr': {'style': 'color: white;', 'class': 'form-control'}, 'label_attr': {'style': 'color: white;'}}) }}
+        {{ form_row(registrationForm.email, {'attr': {'style': 'color: white;', 'class': 'form-control'}, 'label_attr': {'style': 'color: white;'}}) }}
+        {{ form_row(registrationForm.plainPassword, {'attr': {'style': 'color: white;', 'class': 'form-control'}, 'label_attr': {'style': 'color: white;'}}) }}
+        {{ form_row(registrationForm.nbPlaceBouteillle, {'attr': {'min': 0, 'style': 'color: white;-moz-appearance: textfield;', 'class': 'form-control'}, 'label_attr': {'style': 'color: white;'}}) }}
 
-        <button type="submit" class="btn">Register</button>
+        {{ form_row(registrationForm.agreeTerms, {'attr': {'style': 'color: white; height: 15px; width: 15px; margin-bottom:5%'}, 'label_attr': {'style': 'color: white;'}}) }}
+
+        <button type="submit" class="btn btn-primary">Register</button>
+        <a href="{{ path('app_login') }}" class="btn btn-primary">Login</a>
+        <a href="{{ path('homepage') }}" class="btn btn-primary">HomePage</a>
     {{ form_end(registrationForm) }}
     </div>
 {% endblock %}

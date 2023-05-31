@@ -2,9 +2,23 @@
 
 {% block title %}Home{% endblock %}
 
-{% block body %}
-    {% include 'homepageTemplate/navBar.html.twig' %}
 
+{% block body %}
+    {% if app.user is null %}
+        <script>
+            var response = confirm("J'ai plus de 18 ans?");
+
+            if (response === true) {
+                // L'utilisateur a cliqué sur "OK" ou "OUI"
+                alert("Vous avez confirmé que vous avez plus de 18 ans.");
+            } else {
+                // L'utilisateur a cliqué sur "Annuler" ou "NON"
+                window.location.href = "https://www.google.com";
+            }
+        </script>
+    {% endif %}
+
+    {% include 'homepageTemplate/navBar.html.twig' %}
     {% include 'homepageTemplate/filter.html.twig' %}
 
     <h1>Liste des vins</h1>
