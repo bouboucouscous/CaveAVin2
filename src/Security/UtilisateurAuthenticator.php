@@ -52,7 +52,7 @@ class UtilisateurAuthenticator extends AbstractLoginFormAuthenticator
         if (in_array('ROLE_ADMIN', $roles)) {
             return new RedirectResponse($this->urlGenerator->generate('admin'));
         } else {
-            return new RedirectResponse($this->urlGenerator->generate('app_cave_index'));
+            return new RedirectResponse($this->urlGenerator->generate('app_utilisateur'));
         }
     }
 

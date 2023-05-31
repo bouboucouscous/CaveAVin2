@@ -3,18 +3,16 @@
 {% block title %}Hello UtilisateurController!{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/srv/app/src/Controller/UtilisateurController.php'|file_link(0) }}">src/Controller/UtilisateurController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/srv/app/templates/utilisateur/index.html.twig'|file_link(0) }}">templates/utilisateur/index.html.twig</a></code></li>
-    </ul>
-</div>
+    {% include 'homepageTemplate/background.html.twig' %}
+    {% include 'utilisateur/navBarUtilisateur.html.twig' %}
+    <div class="container" style="margin-top:10%">
+            <div class="row same-height justify-content-center">
+                <div class="col-md-6 text-center">
+                    <a href="{{ path('app_vin_new') }}" class="btn btn-primary">Ajouter une bouteille</a>
+                </div>
+                <div class="col-md-6 text-center">
+                    <a href="{{ path('app_cave_index') }}" class="btn btn-primary">Voir ça cave</a>
+                </div>
+            </div>
+        </div>
 {% endblock %}

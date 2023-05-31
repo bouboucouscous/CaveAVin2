@@ -17,12 +17,6 @@ class CaveController extends AbstractController
     #[Route('/', name: 'app_cave_index', methods: ['GET'])]
     public function index(CaveRepository $caveRepository): Response
     {
-        return $this->render('cave/choix.html.twig');
-    }
-
-    #[Route('/macave', name: 'app_cave', methods: ['GET'])]
-    public function index(CaveRepository $caveRepository): Response
-    {
         return $this->render('cave/index.html.twig', [
             'caves' => $caveRepository->findAllWhitNameWine(),
         ]);
