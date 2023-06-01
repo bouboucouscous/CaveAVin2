@@ -19,7 +19,7 @@ class CaveController extends AbstractController
     public function index(CaveRepository $caveRepository, UserInterface $user): Response
     {
         $userId = $user->getId();
-        \Doctrine\Common\Util\Debug::dump($userId);
+        //\Doctrine\Common\Util\Debug::dump($userId);
         return $this->render('cave/index.html.twig', [
             'caves' => $caveRepository->findAllWhitNameWine($userId),
         ]);
