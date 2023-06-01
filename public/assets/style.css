@@ -1968,6 +1968,13 @@ textarea.form-control-lg {
     height: 1.5em;
     border-radius: 0.25rem; }
 
+.form-control select {  
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  padding-left: 0.5rem;
+  font-size: 0.875rem;
+  border-radius: 0.2rem; }
+
 .form-select {
   display: block;
   width: 100%;
@@ -9727,7 +9734,6 @@ a, .btn {
 
 .form-control {
   height: 54px;
-  border-color: rgba(0, 0, 0, 0.1);
   background-color: transparent !important;
   margin-bottom: 10px; }
   .form-control:active, .form-control:focus {
