@@ -9,6 +9,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Security\Core\Security;
 
+use Karser\Recaptcha3Bundle\Form\Recaptcha3Type;
+use Karser\Recaptcha3Bundle\Validator\Constraints\Recaptcha3;
 
 class CaveType extends AbstractType
 {
@@ -37,7 +39,10 @@ class CaveType extends AbstractType
             ->add('id_vin', null, [
                 'label' => 'Vin',
             ])
-        ;
+            ->add('captcha', Recaptcha3Type::class, [
+                'constraints' => new Recaptcha3(),
+                'action_name' => 'app_cave_new',
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

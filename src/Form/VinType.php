@@ -11,6 +11,9 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
+use Karser\Recaptcha3Bundle\Form\Recaptcha3Type;
+use Karser\Recaptcha3Bundle\Validator\Constraints\Recaptcha3;
+
 class VinType extends AbstractType
 {
     private $entityManager;
@@ -32,7 +35,10 @@ class VinType extends AbstractType
             ->add('formatCl',TextType::class)
             ->add('robe')
             ->add('TeneurEnSucre')
-        ;
+            ->add('captcha', Recaptcha3Type::class, [
+                'constraints' => new Recaptcha3(),
+                'action_name' => 'app_vin_new',
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
