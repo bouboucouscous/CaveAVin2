@@ -39,14 +39,14 @@ class CaveRepository extends ServiceEntityRepository
         }
     }
 
-    public function findAllWhitNameWine()
+    public function findAllWhitNameWine(int $id)
     {
         $connection = $this->getEntityManager()->getConnection();
         $sql = '
             SELECT v.Nom, c.enter_date, c.exit_date, c.id
             FROM vin v, cave c
             where v.id = c.id_vin_id
-        ';
+            and c.utilistaeur_id_id =' . $id;
 
         $stmt = $connection->prepare($sql);
 

@@ -21,7 +21,6 @@
                 <td>{{ cave.enter_date ? cave.enter_date|date('Y-m-d') : '' }}</td>
                 <td>{{ cave.exit_date ? cave.exit_date|date('Y-m-d') : '' }}</td>
                 <td>
-                    <a href="{{ path('app_cave_show', {'id': cave.id}) }}">voir</a>
                     <a href="{{ path('app_cave_edit', {'id': cave.id}) }}">modifier</a>
                 </td>
             </tr>

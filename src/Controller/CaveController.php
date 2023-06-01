@@ -10,15 +10,18 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 #[Route('/cave')]
 class CaveController extends AbstractController
 {
     #[Route('/', name: 'app_cave_index', methods: ['GET'])]
-    public function index(CaveRepository $caveRepository): Response
+    public function index(CaveRepository $caveRepository, UserInterface $user): Response
     {
+        $userId = $user->getId();
+        \Doctrine\Common\Util\Debug::dump($userId);
         return $this->render('cave/index.html.twig', [
-            'caves' => $caveRepository->findAllWhitNameWine(),
+            'caves' => $caveRepository->findAllWhitNameWine($userId),
         ]);
     }
 
@@ -38,14 +41,6 @@ class CaveController extends AbstractController
         return $this->renderForm('cave/new.html.twig', [
             'cave' => $cave,
             'form' => $form,
-        ]);
-    }
-
-    #[Route('/{id}', name: 'app_cave_show', methods: ['GET'])]
-    public function show(Cave $cave): Response
-    {
-        return $this->render('cave/show.html.twig', [
-            'cave' => $cave,
         ]);
     }
 

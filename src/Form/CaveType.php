@@ -2,11 +2,12 @@
 
 namespace App\Form;
 
+use App\Entity\Utilisateur;
 use App\Entity\Cave;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Security\Core\Security;
 
 use Karser\Recaptcha3Bundle\Form\Recaptcha3Type;
@@ -24,7 +25,6 @@ class CaveType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $user = $this->security->getUser();
-
         $builder
             ->add('enter_date', null, [
                 'label' => 'Date d\'entrée',
@@ -32,9 +32,9 @@ class CaveType extends AbstractType
             ->add('exit_date', null, [
                 'label' => 'Date de sortie',
             ])
-            ->add('utilisateur_id', HiddenType::class, [
-                'mapped' => false,
-                'data' => $user->getId(),
+            ->add('utilistaeur_id', EntityType::class, [
+                'class' => Utilisateur::class,
+                'data' => $user,
             ])
             ->add('id_vin', null, [
                 'label' => 'Vin',
