@@ -71,11 +71,11 @@ class RegistrationFormType extends AbstractType
                         'message' => 'Le mot de passe doit contenir au moins un des caractères suivant: /[#?!@$%^&*-]',
                     ]),
                     new Regex([
-                        'pattern' => '/azertyuiopqsdfghjklmwxcvbn+/i',
+                        'pattern' => '/[a-z]/',
                         'message' => 'Votre mot de passe doit contenir au moins un caractère miniscule',
                     ]),
                     new Regex([
-                        'pattern' => '/AZERTYUIOPQSDFGHJKLMWXCVBN+/i',
+                        'pattern' => '/[A-Z]/',
                         'message' => 'Votre mot de passe doit contenir au moins un caractère majuscule',
                     ]),
                 ],

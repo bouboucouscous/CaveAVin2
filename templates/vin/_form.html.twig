@@ -1,0 +1,15 @@
+{{ form_start(form) }}
+    {{ form_row(form.Nom, {'attr': {'style': 'color: white;', 'class': 'form-control'}, 'label_attr': {'style': 'color: white;'}}) }}
+    {{ form_row(form.Annee, {'attr': {'style': 'color: white;', 'class': 'form-control'}, 'label_attr': {'style': 'color: white;'}}) }}
+    {{ form_row(form.formatCl, {'attr': {'style': 'color: white;', 'class': 'form-control'}, 'label_attr': {'style': 'color: white;'}}) }}
+    {{ form_row(form.robe, {'attr': {'style': 'color: white;', 'class': 'form-control'}, 'label_attr': {'style': 'color: white;'}}) }}
+    {{ form_row(form.TeneurEnSucre, {'attr': {'style': 'color: white;', 'class': 'form-control'}, 'label_attr': {'style': 'color: white;'}}) }}
+    <div class="row g-0 align-items-center">
+        <div class="col-6 text-left">
+            <button class="btn btn-primary">{{ button_label|default('Sauvegarder') }}</button>
+        </div>
+        <div class="col-6 text-right">
+            <a href="{{ path('app_utilisateur') }}" class="btn btn-primary">Page Précédente</a>
+        </div>
+    </div>
+{{ form_end(form) }}

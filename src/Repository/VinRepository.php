@@ -39,7 +39,6 @@ class VinRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
-    
 
     public function paginationQuery()
     {
@@ -175,7 +174,6 @@ class VinRepository extends ServiceEntityRepository
 
         return $resultSet->fetchAllAssociative();
     }
-
 
 //    public function findOneBySomeField($value): ?Vin
 //    {

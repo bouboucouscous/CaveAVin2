@@ -86,13 +86,6 @@ class CaveAVinController extends AbstractController
         }
     }
 
-    #[Route('/vin/{id}', name: 'app_vin_detail')]
-    public function showVinDetail(Vin $vin): Response
-    {
-        return $this->render('cave_a_vin/detail.html.twig', [
-            'vin' => $vin,
-        ]);
-    }
 }
 
 
