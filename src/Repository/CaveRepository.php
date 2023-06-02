@@ -61,7 +61,11 @@ class CaveRepository extends ServiceEntityRepository
         $sql = '
             SELECT count(c.id)
             FROM cave c
-            where c.utilistaeur_id_id =' . $id;
+            where c.utilistaeur_id_id =' . $id.
+            '
+             and c.enter_date is not null
+             and c.exit_date is null
+            ';
 
         $stmt = $connection->prepare($sql);
         $resultSet = $stmt->executeQuery();
