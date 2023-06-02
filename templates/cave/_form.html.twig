@@ -1,0 +1,13 @@
+{{ form_start(form) }}
+    {{ form_row(form.enter_date, {'attr': {'style': 'color: white;', 'class': 'form-control'}, 'label_attr': {'style': 'color: white;'}}) }}
+    {{ form_row(form.exit_date, {'attr': {'style': 'color: white;', 'class': 'form-control'}, 'label_attr': {'style': 'color: white;'}}) }}
+    {{ form_row(form.utilistaeur_id, {'attr': {'style': 'display: none;'}, 'label_attr': {'style': 'display: none;'}}) }}
+    {{ form_row(form.id_vin, {'attr': {'style': 'color: white;', 'class': 'form-control'}, 'label_attr': {'style': 'color: white;'}}) }}
+    <div class="row g-0 align-items-center">
+        <div class="col-6 text-left">
+            <button class="btn btn-primary">{{ button_label|default('Sauvegarder') }}</button>
+        </div>
+        <div class="col-6 text-right">
+            <a href="{{ path('app_cave_index') }}" class="btn btn-primary">Page Précédente</a>
+        </div>
+{{ form_end(form) }}

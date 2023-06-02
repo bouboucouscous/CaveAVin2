@@ -1,20 +1,37 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello CaveAVinController!{% endblock %}
+{% block title %}Home{% endblock %}
+
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    {% if app.user is null %}
+        <script>
+            var response = confirm("J'ai plus de 18 ans?");
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+            if (response === true) {
+                // L'utilisateur a cliqué sur "OK" ou "OUI"
+                alert("Vous avez confirmé que vous avez plus de 18 ans.");
+            } else {
+                // L'utilisateur a cliqué sur "Annuler" ou "NON"
+                window.location.href = "https://www.google.com";
+            }
+        </script>
+    {% endif %}
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/srv/app/src/Controller/CaveAVinController.php'|file_link(0) }}">src/Controller/CaveAVinController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/srv/app/templates/cave_a_vin/index.html.twig'|file_link(0) }}">templates/cave_a_vin/index.html.twig</a></code></li>
-    </ul>
-</div>
+    {% include 'homepageTemplate/navBar.html.twig' %}
+    {% include 'homepageTemplate/filter.html.twig' %}
+
+    <h1>Liste des vins</h1>
+    <div class="row posts-entry">
+        {% for vin in pagination %}
+            <div class="blog-entry d-flex blog-entry-search-item">
+                <img class="img-fluid img-link me-4" src="{{ asset('image/imgVin/' ~ vin.id ~ '') }}" alt="Image">
+                <div>
+                    <h2><a href="{{ path('app_vin_detail', { 'id': vin.id }) }}"> {{ vin.Nom }} de {{ vin.Annee }} </a></h2>          
+                    <p><a class="btn btn-sm btn-outline-primary" href="{{ path('app_vin_detail', { 'id': vin.id }) }}">Voir les détails</a></p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    {% include 'homepageTemplate/pagination.html.twig' %}
 {% endblock %}

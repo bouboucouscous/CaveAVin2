@@ -1,0 +1,30 @@
+{% block body %}
+    <nav class="site-nav">
+        <div class="container">
+            <div class="menu-bg-wrap">
+                <div class="site-navigation">
+                    <div class="row g-0 align-items-center">           
+                        {% if app.user %}
+                            <div class="col-4 text-left">
+                                <a href="{{ path('homepage') }}" class="btn btn-primary">HomePage</a>
+                            </div>
+                            <div class="col-4 text-center">
+                                <h1><a class="site-cover.single-page posts-entry-title" href="{{ path('app_utilisateur') }}">{{ app.user.username }}</a></h1>
+                            </div>
+                            <div class="col-4 text-right">
+                                <a href="{{ path('app_logout') }}" class="btn btn-primary">Déconnexion</a>
+                            </div>
+                        {% else %}
+                            <div class="col-2 text-left">
+                                <a href="{{ path('homepage') }}" class="btn btn-primary">HomePage</a>
+                            </div>
+                            <div class="col-10 text-right">
+                                <a class="btn btn-primary" href="{{ path('app_login') }}">Connexion</a>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+{% endblock %}

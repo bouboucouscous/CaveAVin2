@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détails du vin{% endblock %}
+
+{% block body %}
+    <div>
+        {% include 'homepageTemplate/background.html.twig' %}
+        {% include 'homepageTemplate/button_user.html.twig' %}
+        <h1 class="h3 mb-3 font-weight-normal" style="z-index:1;position: fixed; top:30%;left:35%"><a>{{ vin.nom }}</a></h1>
+    </div>
+    <div class="row posts-entry" style="left:35%;position: inherit;">
+        <center style="padding-top:1%; ">
+            <div class="blog-entry d-flex blog-entry-search-item">
+                    <img class="img-fluid img-link me-4" src="{{ asset('image/imgVin/' ~ vin.id ~ '') }}" alt="Image">
+                    <div>
+                        <p>Année : {{ vin.annee }}</p>
+                        <p>Format en cl : {{ vin.formatCl }}</p>
+                        <p>Robe : {{ vin.robe }}</p>
+                        <p>Teneur en sucre : {{ vin.teneurEnSucre }}</p>
+                    </div>
+                </div>
+        </center>
+    </div>
+{% endblock %}

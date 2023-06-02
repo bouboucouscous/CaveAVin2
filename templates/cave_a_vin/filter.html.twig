@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Home{% endblock %}
+
+{% block body %}
+    {% include 'homepageTemplate/navBar.html.twig' %}
+    {% include 'homepageTemplate/filter.html.twig' %}
+
+    <h1>Liste des vins</h1>
+    <div class="row posts-entry">
+        {% for vin in pagination %}
+            <div class="blog-entry d-flex blog-entry-search-item">
+                <img class="img-fluid img-link me-4" src="{{ asset('image/imgVin/' ~ vin.id ~ '') }}" alt="Image">
+                <div>
+                    <h2><a href="{{ path('app_vin_detail', { 'id': vin.id }) }}"> {{ vin.nom }} de {{ vin.annee }} </a></h2>
+                    <p><a class="btn btn-sm btn-outline-primary" href="{{ path('app_vin_detail', { 'id': vin.id }) }}">Voir les détails</a></p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    {% include 'homepageTemplate/pagination.html.twig' %}
+{% endblock %}
