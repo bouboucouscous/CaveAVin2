@@ -12,7 +12,7 @@
             <div class="blog-entry d-flex blog-entry-search-item">
                 <img class="img-fluid img-link me-4" src="{{ asset('image/imgVin/' ~ vin.id ~ '') }}" alt="Image">
                 <div>
-                    <h2><a href="{{ path('app_vin_detail', { 'id': vin.id }) }}"> {{ vin.nom }} de {{ vin.annee }} </a></h2>          
+                    <h2><a href="{{ path('app_vin_detail', { 'id': vin.id }) }}"> {{ vin.nom }} de {{ vin.annee }} </a></h2>
                     <p><a class="btn btn-sm btn-outline-primary" href="{{ path('app_vin_detail', { 'id': vin.id }) }}">Voir les détails</a></p>
                 </div>
             </div>

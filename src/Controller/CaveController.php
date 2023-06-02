@@ -31,8 +31,6 @@ class CaveController extends AbstractController
         $cave = new Cave();
         $form = $this->createForm(CaveType::class, $cave);
         $form->handleRequest($request);
-        var_dump($cave->getUtilistaeurId());
-        var_dump($user);
         if ($form->isSubmitted() && $form->isValid() && $cave->getUtilistaeurId() === $user) {
             $caveRepository->save($cave, true);
 

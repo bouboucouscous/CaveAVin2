@@ -1598,18 +1598,18 @@ progress {
   .gy-xxl-5 {
     --bs-gutter-y: 3rem; } }
 
-.table {
+.table td,tr, thead{
   --bs-table-bg: transparent;
   --bs-table-accent-bg: transparent;
-  --bs-table-striped-color: #212529;
-  --bs-table-striped-bg: rgba(0, 0, 0, 0.05);
-  --bs-table-active-color: #212529;
-  --bs-table-active-bg: rgba(0, 0, 0, 0.1);
-  --bs-table-hover-color: #212529;
+  --bs-table-striped-color: #dee2e6;
+  --bs-table-striped-bg: #dee2e6(0, 0, 0, 0.05);
+  --bs-table-active-color: #dee2e6;
+  --bs-table-active-bg: #dee2e6(0, 0, 0, 0.1);
+  --bs-table-hover-color: #dee2e6;
   --bs-table-hover-bg: rgba(0, 0, 0, 0.075);
   width: 100%;
   margin-bottom: 1rem;
-  color: #212529;
+  color: #dee2e6;
   vertical-align: top;
   border-color: #dee2e6; }
   .table > :not(caption) > * > * {
@@ -10011,7 +10011,8 @@ textarea {
 .posts-entry .blog-entry-search-item {
   margin-bottom: 30px; }
   .posts-entry .blog-entry-search-item .img-link {
-    width: 280px;
+    width: auto;
+    height: 280px;
     border-radius: 0; }
     .posts-entry .blog-entry-search-item .img-link img {
       margin-bottom: 0;

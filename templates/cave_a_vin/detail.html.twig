@@ -11,9 +11,8 @@
     <div class="row posts-entry" style="left:35%;position: inherit;">
         <center style="padding-top:1%; ">
             <div class="blog-entry d-flex blog-entry-search-item">
-                    <img class="img-fluid img-link me-4" src="https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcRr13EkNjqP27YI8nAJCv5TdFmX6DuCQnwPYSFJqecfNly7OUrH1uPnmvYFCu8XMcGk6HRz86loLPTOxOi8ThsFQ9eZuEQ-30gU61mSlKhwTuTgEdFIqrw_qVMOhmhdZo-PbEc&usqp=CAc" alt="Image">
+                    <img class="img-fluid img-link me-4" src="{{ asset('image/imgVin/' ~ vin.id ~ '') }}" alt="Image">
                     <div>
-                        
                         <p>Année : {{ vin.annee }}</p>
                         <p>Format en cl : {{ vin.formatCl }}</p>
                         <p>Robe : {{ vin.robe }}</p>
