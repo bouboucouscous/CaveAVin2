@@ -10,7 +10,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Validator\Constraints\File;
 use Karser\Recaptcha3Bundle\Form\Recaptcha3Type;
 use Karser\Recaptcha3Bundle\Validator\Constraints\Recaptcha3;
 
@@ -35,6 +36,17 @@ class VinType extends AbstractType
             ->add('formatCl',TextType::class)
             ->add('robe')
             ->add('TeneurEnSucre')
+            ->add('imageFile', FileType::class, [
+                'label' => 'Photo Bouteille',
+                'mapped' => false,
+                'required' => true,
+                'constraints' => [
+                    new File([
+                        'mimeTypes' => ["image/jpeg", "image/gif", "image/png"],
+                        'mimeTypesMessage' => 'Please upload a valid image',
+                    ])
+                ],
+            ])
             ->add('captcha', Recaptcha3Type::class, [
                 'constraints' => new Recaptcha3(),
                 'action_name' => 'app_vin_new',

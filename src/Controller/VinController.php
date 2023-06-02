@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 #[Route('/vin')]
 class VinController extends AbstractController
@@ -21,7 +22,20 @@ class VinController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $vinRepository->save($vin, true);
+            $imageFile = $form->get('imageFile')->getData();
+            if ($imageFile) {
+
+                $vinRepository->save($vin, true);
+                $newFilename = $vin->getId();
+
+
+
+                $imageFile->move(
+                    $this->getParameter('imgVinPath'),
+                    $newFilename
+                );
+
+            }
 
             return $this->redirectToRoute('app_utilisateur', [], Response::HTTP_SEE_OTHER);
         }
