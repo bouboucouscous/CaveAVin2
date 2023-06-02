@@ -55,6 +55,31 @@ class CaveRepository extends ServiceEntityRepository
         return $resultSet->fetchAllAssociative();
     }
 
+    public function getRemplissage(int $id)
+    {
+        $connection = $this->getEntityManager()->getConnection();
+        $sql = '
+            SELECT count(c.id)
+            FROM cave c
+            where c.utilistaeur_id_id =' . $id;
+
+        $stmt = $connection->prepare($sql);
+        $resultSet = $stmt->executeQuery();
+        $result = $resultSet->fetchAllAssociative();
+
+        $connection2 = $this->getEntityManager()->getConnection();
+        $sql2 = '
+            SELECT u.nb_place_bouteillle
+            FROM Utilisateur u
+            where u.id =' . $id;
+
+        $stmt2 = $connection2->prepare($sql2);
+        $resultSet2 = $stmt2->executeQuery();
+        $result2 = $resultSet2->fetchAllAssociative();
+
+        return $result[0]["count"] * 100 / $result2[0]["nb_place_bouteillle"];
+    }
+
 //    /**
 //     * @return Cave[] Returns an array of Cave objects
 //     */

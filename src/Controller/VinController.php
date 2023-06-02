@@ -27,9 +27,6 @@ class VinController extends AbstractController
 
                 $vinRepository->save($vin, true);
                 $newFilename = $vin->getId();
-
-
-
                 $imageFile->move(
                     $this->getParameter('imgVinPath'),
                     $newFilename
