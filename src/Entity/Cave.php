@@ -14,10 +14,12 @@ class Cave
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\OneToOne(inversedBy: 'cave', cascade: ['persist', 'remove'])]
+    #[ORM\ManyToOne(targetEntity:"App\Entity\Utilisateur", inversedBy: 'cave')]
+    #[ORM\JoinColumn(nullable: false)]
     private ?Utilisateur $utilistaeur_id = null;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    #[ORM\ManyToOne(targetEntity:"App\Entity\Vin", inversedBy: 'cave')]
+    #[ORM\JoinColumn(nullable: false)]
     private ?Vin $id_vin = null;
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE)]

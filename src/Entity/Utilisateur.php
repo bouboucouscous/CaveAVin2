@@ -43,10 +43,15 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $email = null;
 
-    #[ORM\OneToOne(mappedBy: 'utilistaeur_id', cascade: ['persist', 'remove'])]
-    private ?Cave $cave = null;
+    #[ORM\OneToMany(targetEntity:"App\Entity\Cave", mappedBy: 'utilistaeur_id', cascade: ['persist', 'remove'])]
+    private  $cave;
 
     public string $plainPassword;
+
+    public function __construct()
+    {
+        $this->caves = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -173,26 +178,9 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getCave(): ?Cave
+    public function getCave(): ?Collection
     {
         return $this->cave;
-    }
-
-    public function setCave(?Cave $cave): self
-    {
-        // unset the owning side of the relation if necessary
-        if ($cave === null && $this->cave !== null) {
-            $this->cave->setUtilistaeurId(null);
-        }
-
-        // set the owning side of the relation if necessary
-        if ($cave !== null && $cave->getUtilistaeurId() !== $this) {
-            $cave->setUtilistaeurId($this);
-        }
-
-        $this->cave = $cave;
-
-        return $this;
     }
 
     public function __toString()
